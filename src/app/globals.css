@@ -129,3 +129,7 @@ iframe[title="Powered by Netlify"] {
 iframe[title="Powered by Netlify"] {
   display: none !important;
 }
+#nl-badge-frame,
+iframe[title="Powered by Netlify"] {
+  display: none !important;
+}
