@@ -27,7 +27,7 @@ export default function Home() {
             </span>
             <div className="leading-tight min-w-0">
               <h1 className="text-base font-extrabold tracking-tight truncate">
-                Tube<span className="text-red-600">Trends</span>
+                                Trend<span className="text-teal-600 dark:text-teal-400">Nazar</span>
               </h1>
               <p className="text-[10px] text-muted-foreground hidden sm:block">
                 Live + researched YouTube keyword intel, every category
