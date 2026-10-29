@@ -95,7 +95,7 @@ export default function Home() {
       {/* ---------- Footer ---------- */}
       <footer className="mt-auto border-t">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 py-4 flex flex-wrap items-center justify-between gap-2 text-xs text-muted-foreground">
-          <p>TubeTrends — keyword research for YouTube creators. Live tab streams real user queries; database metrics are modeled estimates.</p>
+          <p>TrendNazar — keyword research for YouTube creators. Live tab streams real user queries; database metrics are modeled estimates.</p>
           <p className="hidden sm:inline">Live source: YouTube search autocomplete</p>
         </div>
       </footer>
