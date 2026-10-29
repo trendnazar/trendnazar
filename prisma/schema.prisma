@@ -1,0 +1,40 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Category {
+  id          String    @id @default(cuid())
+  slug        String    @unique
+  name        String
+  icon        String
+  color       String
+  description String
+  keywords    Keyword[]
+
+  @@map("categories")
+}
+
+model Keyword {
+  id          String   @id @default(cuid())
+  term        String
+  volume      Int
+  competition Int
+  difficulty  Int
+  growth      Float
+  cpc         Float
+  trend       String
+  isRising    Boolean
+  categoryId  String
+  category    Category @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+
+  @@unique([term, categoryId])
+  @@index([categoryId])
+  @@index([volume])
+  @@index([growth])
+  @@map("keywords")
+}
