@@ -1,7 +1,8 @@
 'use client'
 
 import { useState } from 'react'
-import { Youtube, Sun, Moon } from 'lucide-react'
+import Image from 'next/image'
+import { Sun, Moon } from 'lucide-react'
 import { useTheme } from 'next-themes'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
@@ -9,6 +10,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { KeywordAnalyzer } from '@/components/yt/analyzer'
 import { LiveSection } from '@/components/yt/live-section'
 import { DatabaseTab } from '@/components/yt/database-tab'
+import { AdSlot } from '@/components/ads/ad-slot'
 
 type Mode = 'live' | 'database'
 
@@ -22,15 +24,20 @@ export default function Home() {
       <header className="sticky top-0 z-40 border-b bg-background/85 backdrop-blur supports-[backdrop-filter]:bg-background/70">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 h-14 flex items-center justify-between gap-3">
           <div className="flex items-center gap-2.5 min-w-0">
-            <span className="inline-flex h-8 w-8 items-center justify-center rounded-lg bg-red-600 text-white">
-              <Youtube className="h-5 w-5" />
-            </span>
+            <Image
+              src="/brand/logo-nazar.png"
+              alt="TrendNazar logo"
+              width={36}
+              height={36}
+              priority
+              className="h-9 w-9 rounded-xl border border-white/10 shadow-sm"
+            />
             <div className="leading-tight min-w-0">
               <h1 className="text-base font-extrabold tracking-tight truncate">
-                                Trend<span className="text-teal-600 dark:text-teal-400">Nazar</span>
+                Trend<span className="text-teal-500">Nazar</span>
               </h1>
               <p className="text-[10px] text-muted-foreground hidden sm:block">
-                Live + researched YouTube keyword intel, every category
+                Live YouTube keyword &amp; trend intel — keep your nazar on every trend
               </p>
             </div>
           </div>
@@ -54,49 +61,90 @@ export default function Home() {
         </div>
       </header>
 
-      <main className="flex-1 mx-auto w-full max-w-7xl px-4 sm:px-6 py-6">
-        <Tabs value={mode} onValueChange={(v) => setMode(v as Mode)} className="space-y-6">
-          <div className="flex justify-center">
-            <TabsList className="h-11 rounded-full p-1">
-              <TabsTrigger
-                value="live"
-                className="rounded-full px-5 gap-2 data-[state=active]:bg-background data-[state=active]:text-foreground"
-              >
-                <span className="relative flex h-2 w-2">
-                  <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-red-500 opacity-70" />
-                  <span className="relative inline-flex h-2 w-2 rounded-full bg-red-600" />
-                </span>
-                Live now
-              </TabsTrigger>
-              <TabsTrigger
-                value="database"
-                className="rounded-full px-5 data-[state=active]:bg-background data-[state=active]:text-foreground"
-              >
-                Research database
-              </TabsTrigger>
-            </TabsList>
+      {/* ---------- Top ad banner ---------- */}
+      <div className="mx-auto w-full max-w-7xl px-4 sm:px-6 pt-4">
+        <AdSlot placement="top" className="mx-auto h-[90px] w-full max-w-[728px]" />
+      </div>
+
+      <div className="flex-1 mx-auto flex w-full max-w-[1600px] gap-4 px-4 sm:px-6">
+        {/* ---------- Left ad rail ---------- */}
+        <aside className="hidden xl:block w-40 shrink-0 py-6" aria-label="Sponsored left">
+          <div className="sticky top-20">
+            <AdSlot placement="left" className="w-40" />
           </div>
+        </aside>
 
-          {/* Shared analyzer — works in both modes */}
-          <section aria-label="Keyword analyzer">
-            <KeywordAnalyzer />
+        <main className="min-w-0 flex-1 py-6">
+          <Tabs value={mode} onValueChange={(v) => setMode(v as Mode)} className="space-y-6">
+            <div className="flex justify-center">
+              <TabsList className="h-11 rounded-full p-1">
+                <TabsTrigger
+                  value="live"
+                  className="rounded-full px-5 gap-2 data-[state=active]:bg-background data-[state=active]:text-foreground"
+                >
+                  <span className="relative flex h-2 w-2">
+                    <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-red-500 opacity-70" />
+                    <span className="relative inline-flex h-2 w-2 rounded-full bg-red-600" />
+                  </span>
+                  Live now
+                </TabsTrigger>
+                <TabsTrigger
+                  value="database"
+                  className="rounded-full px-5 data-[state=active]:bg-background data-[state=active]:text-foreground"
+                >
+                  Research database
+                </TabsTrigger>
+              </TabsList>
+            </div>
+
+            {/* Shared analyzer — works in both modes */}
+            <section aria-label="Keyword analyzer">
+              <KeywordAnalyzer />
+            </section>
+
+            <TabsContent value="live" className="mt-0">
+              <LiveSection />
+            </TabsContent>
+
+            <TabsContent value="database" className="mt-0">
+              <DatabaseTab />
+            </TabsContent>
+          </Tabs>
+
+          {/* ---------- In-feed ad ---------- */}
+          <section aria-label="Sponsored" className="mt-6">
+            <AdSlot placement="inFeed" className="h-[110px] w-full" />
           </section>
+        </main>
 
-          <TabsContent value="live" className="mt-0">
-            <LiveSection />
-          </TabsContent>
-
-          <TabsContent value="database" className="mt-0">
-            <DatabaseTab />
-          </TabsContent>
-        </Tabs>
-      </main>
+        {/* ---------- Right ad rail ---------- */}
+        <aside className="hidden xl:block w-40 shrink-0 py-6" aria-label="Sponsored right">
+          <div className="sticky top-20">
+            <AdSlot placement="right" className="w-40" />
+          </div>
+        </aside>
+      </div>
 
       {/* ---------- Footer ---------- */}
       <footer className="mt-auto border-t">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 py-4 flex flex-wrap items-center justify-between gap-2 text-xs text-muted-foreground">
-          <p>TrendNazar — keyword research for YouTube creators. Live tab streams real user queries; database metrics are modeled estimates.</p>
-          <p className="hidden sm:inline">Live source: YouTube search autocomplete</p>
+          <div className="flex items-center gap-2 min-w-0">
+            <Image
+              src="/brand/logo-nazar.png"
+              alt="TrendNazar"
+              width={24}
+              height={24}
+              className="h-6 w-6 rounded-md opacity-90"
+            />
+            <p>
+              TrendNazar — keyword research for YouTube creators. Live tab streams real searches &amp;
+              trending videos; database metrics are modeled estimates.
+            </p>
+          </div>
+          <div className="flex flex-col items-start sm:items-end gap-0.5">
+            <p className="hidden sm:inline">Live sources: Google Trends · YouTube Trending chart · Autocomplete</p>
+            <p className="hidden md:inline">Advertise with us — ad slots ready (top · left · right · in-feed)</p>
+          </div>
         </div>
       </footer>
     </div>
