@@ -120,3 +120,8 @@
     @apply bg-background text-foreground;
   }
 }
+/* Hide Netlify badge */
+#nl-badge-frame,
+iframe[title="Powered by Netlify"] {
+  display: none !important;
+}
