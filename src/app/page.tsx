@@ -33,11 +33,14 @@ export default function Home() {
               className="h-9 w-9 rounded-xl border border-white/10 shadow-sm"
             />
             <div className="leading-tight min-w-0">
-              <h1 className="text-base font-extrabold tracking-tight truncate">
-                Trend<span className="text-foreground">Nazar</span>
-              </h1>
+              <div className="flex items-center gap-2">
+                <h1 className="text-base font-extrabold tracking-tight truncate">TrendNazar</h1>
+                <span className="rounded-full bg-gradient-to-r from-teal-500 to-emerald-500 px-2 py-0.5 text-[9px] font-extrabold uppercase tracking-wider text-white shadow-sm whitespace-nowrap">
+                  Free to grow
+                </span>
+              </div>
               <p className="text-[10px] text-muted-foreground hidden sm:block">
-                Live YouTube keyword &amp; trend intel — keep your nazar on every trend
+                Grow your YouTube channel with trending keywords
               </p>
             </div>
           </div>
@@ -137,7 +140,7 @@ export default function Home() {
               className="h-6 w-6 rounded-md opacity-90"
             />
             <p>
-              TrendNazar — keyword research for YouTube creators. Live tab streams real searches &amp;
+              TrendNazar — grow your YouTube channel with the right keywords. Live tab streams real searches &amp;
               trending videos; database metrics are modeled estimates.
             </p>
           </div>
