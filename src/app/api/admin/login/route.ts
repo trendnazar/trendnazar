@@ -1,24 +1,20 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { createHash } from 'crypto'
+import { getEffectivePassword, savePassword, tokenFor } from '@/lib/settings'
 
 export const dynamic = 'force-dynamic'
 
-const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD ?? 'trendnazar2026'
 const COOKIE = 'tn_admin'
-
-function tokenFor(password: string) {
-  return createHash('sha256').update(`tn::${password}::v1`).digest('hex')
-}
 
 export async function POST(req: NextRequest) {
   try {
     const body = await req.json().catch(() => ({}))
     const password = (body?.password ?? '').toString()
-    if (!password || password !== ADMIN_PASSWORD) {
+    const effective = await getEffectivePassword()
+    if (!password || password !== effective) {
       return NextResponse.json({ error: 'Wrong password' }, { status: 401 })
     }
     const res = NextResponse.json({ ok: true })
-    res.cookies.set(COOKIE, tokenFor(ADMIN_PASSWORD), {
+    res.cookies.set(COOKIE, tokenFor(effective), {
       httpOnly: true,
       sameSite: 'lax',
       secure: true,
@@ -33,7 +29,28 @@ export async function POST(req: NextRequest) {
 
 export async function GET(req: NextRequest) {
   const token = req.cookies.get(COOKIE)?.value
-  return NextResponse.json({ authed: token === tokenFor(ADMIN_PASSWORD) })
+  const expected = tokenFor(await getEffectivePassword())
+  return NextResponse.json({ authed: token === expected })
+}
+
+// Password change — sirf login hoey banda hi kar sakda
+export async function PUT(req: NextRequest) {
+  try {
+    const token = req.cookies.get(COOKIE)?.value
+    const expected = tokenFor(await getEffectivePassword())
+    if (token !== expected) {
+      return NextResponse.json({ error: 'Not authorized' }, { status: 401 })
+    }
+    const body = await req.json().catch(() => ({}))
+    const newPassword = (body?.newPassword ?? '').toString()
+    if (newPassword.length < 6) {
+      return NextResponse.json({ error: 'New password at least 6 characters' }, { status: 400 })
+    }
+    await savePassword(newPassword)
+    return NextResponse.json({ ok: true })
+  } catch {
+    return NextResponse.json({ error: 'Could not save — storage unavailable' }, { status: 500 })
+  }
 }
 
 export async function DELETE() {
