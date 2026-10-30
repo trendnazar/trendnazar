@@ -15,16 +15,16 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "TrendNazar — YouTube Trending & Keyword Research",
+  title: "TrendNazar — Grow Your YouTube Channel with Trending Keywords",
   description:
-    "Research the most-searched YouTube keywords for every category: monthly search volume, competition, difficulty, CPC and 12-month trends for 384+ keywords across 16 categories.",
+    "Free YouTube keyword research — find trending keywords with search volume, competition, difficulty and CPC. Grow your YouTube channel faster with TrendNazar.",
   keywords: ["YouTube keywords", "keyword research", "YouTube SEO", "search volume", "trending topics", "content ideas"],
   icons: {
     icon: "/brand/icon-nazar-192.png",
   },
   openGraph: {
-    title: "TrendNazar — YouTube Keyword Research",
-    description: "Most-searched YouTube keywords for every category, with volume, competition and trends.",
+    title: "TrendNazar — Grow Your YouTube Channel with Trending Keywords",
+    description: "Find trending YouTube keywords and grow your channel faster — free.",
     siteName: "TrendNazar",
     images: ["/brand/og-nazar.png"],
     type: "website",
