@@ -34,7 +34,7 @@ export default function Home() {
             />
             <div className="leading-tight min-w-0">
               <h1 className="text-base font-extrabold tracking-tight truncate">
-                Trend<span className="text-teal-500">Nazar</span>
+                Trend<span className="text-foreground">Nazar</span>
               </h1>
               <p className="text-[10px] text-muted-foreground hidden sm:block">
                 Live YouTube keyword &amp; trend intel — keep your nazar on every trend
